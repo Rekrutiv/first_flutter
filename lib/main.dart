@@ -1,7 +1,9 @@
+import 'package:first_flutter_app/widget/MainWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_flutter_app/ColorProvider.dart';
 import 'ColorRandom.dart';
+
 
 void main() => runApp(new MyApp());
 
@@ -9,9 +11,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Flutter',
-      theme: new ThemeData(
+      theme: ThemeData(
         primarySwatch: Colors.green,
       ),
       home: MultiProvider(providers: [
@@ -46,8 +48,8 @@ class MyHomePage extends StatelessWidget {
     final counterClick = Provider.of<ColorProvider>(context, listen: false);
     final random = Provider.of<ColorRandom>(context, listen: false);
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text(title),
+      appBar: AppBar(
+        title: Text(title),
       ),
       body: Consumer<ColorRandom>(
         builder: (_, colorRandom, __) => InkWell(
@@ -55,22 +57,18 @@ class MyHomePage extends StatelessWidget {
             random.setRandomColor();
             currentColor = colors[random.indexColor];
           },
-          child: Container(
-            color: currentColor,
-            child: new Center(
-              child: Consumer<ColorProvider>(
-                builder: (_, colorProvider, __) =>
-                    Text("Total price: ${counterClick.mainText}"),
-              ),
-            ),
+          child: Center(
+            child: MainWidget(currentColor: currentColor, counterClick: counterClick),
           ),
         ),
       ),
-      floatingActionButton: new FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: counterClick.increment,
         tooltip: 'Increment',
-        child: new Icon(Icons.add),
+        child: Icon(Icons.add),
       ),
     );
   }
 }
+
+
