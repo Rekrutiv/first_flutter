@@ -16,7 +16,8 @@ class  MainWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: Duration (seconds: 1),
       width: 200,
       height: 200,
       decoration:
@@ -24,13 +25,15 @@ class  MainWidget extends StatelessWidget {
       ),
 
       child: Consumer<ColorProvider>(
-        builder: (_, colorProvider, __) => Text(
-            "Total price: ${counterClick.mainText}",
-            style: TextStyle(
-                color: Colors.green[700],
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Open Sans',
-                fontSize: 20)),
+        builder: (_, colorProvider, __) => Center(
+          child: Text(
+              "Total price: ${counterClick.mainText}",
+              style: TextStyle(
+                  color: Colors.green[700],
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Open Sans',
+                  fontSize: 20)),
+        ),
       ),
     );
   }

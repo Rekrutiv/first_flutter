@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:first_flutter_app/ColorProvider.dart';
 import 'ColorRandom.dart';
 
-
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
       home: MultiProvider(providers: [
         ChangeNotifierProvider(create: (_) => ColorProvider()),
         ChangeNotifierProvider(create: (_) => ColorRandom())
-      ], child: new MyHomePage(title: 'Flutter Color Random')),
+      ], child: MyHomePage(title: 'Flutter Color Random')),
     );
   }
 }
@@ -47,28 +46,44 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final counterClick = Provider.of<ColorProvider>(context, listen: false);
     final random = Provider.of<ColorRandom>(context, listen: false);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Consumer<ColorRandom>(
-        builder: (_, colorRandom, __) => InkWell(
-          onTap: () {
-            random.setRandomColor();
-            currentColor = colors[random.indexColor];
-          },
-          child: Center(
-            child: MainWidget(currentColor: currentColor, counterClick: counterClick),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+        ),
+        body: Consumer<ColorRandom>(
+          builder: (_, colorRandom, __) => InkWell(
+            onTap: () {
+              random.setRandomColor();
+              currentColor = colors[random.indexColor];
+            },
+            child: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    MainWidget(
+                        currentColor: currentColor, counterClick: counterClick),
+                    RaisedButton(
+                      child: Text('Clicker',
+                          style: TextStyle(
+                              color: Colors.green[700],
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Open Sans',
+                              fontSize: 20)),
+                      color: Colors.purpleAccent,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(16.0))),
+                      onPressed: counterClick.increment,
+                    ),
+                  ]),
+            ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: counterClick.increment,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+
+//
       ),
     );
   }
 }
-
-
