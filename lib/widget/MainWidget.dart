@@ -2,32 +2,34 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../ColorProvider.dart';
+import '../provider/ColorProvider.dart';
 
 class  MainWidget extends StatelessWidget {
   const MainWidget({
     Key key,
     @required this.currentColor,
-    @required this.counterClick,
+    @required this.sizeClick,
   }) : super(key: key);
 
+
   final Color currentColor;
-  final ColorProvider counterClick;
+  final SizeProvider sizeClick;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration (seconds: 1),
-      width: 200,
-      height: 200,
+      duration: Duration (seconds: 2),
+      curve: Curves.bounceOut,
+      height: 100+sizeClick.sizeShape,
+      width: 100+sizeClick.sizeShape,
       decoration:
       BoxDecoration(color: currentColor, shape: BoxShape.circle,
       ),
 
-      child: Consumer<ColorProvider>(
+      child: Consumer<SizeProvider>(
         builder: (_, colorProvider, __) => Center(
           child: Text(
-              "Total price: ${counterClick.mainText}",
+              "size: ${sizeClick.sizeShape}",
               style: TextStyle(
                   color: Colors.green[700],
                   fontWeight: FontWeight.w500,

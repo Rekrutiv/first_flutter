@@ -1,8 +1,8 @@
 import 'package:first_flutter_app/widget/MainWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:first_flutter_app/ColorProvider.dart';
-import 'ColorRandom.dart';
+import 'provider/ColorProvider.dart';
+import 'provider/ColorRandom.dart';
 
 void main() => runApp(new MyApp());
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       home: MultiProvider(providers: [
-        ChangeNotifierProvider(create: (_) => ColorProvider()),
+        ChangeNotifierProvider(create: (_) => SizeProvider()),
         ChangeNotifierProvider(create: (_) => ColorRandom())
       ], child: MyHomePage(title: 'Flutter Color Random')),
     );
@@ -39,12 +39,12 @@ class MyHomePage extends StatelessWidget {
     //colors(0xFF and paste color code)
   ];
   final String title;
-  final colorProvider = ColorProvider();
+  final colorProvider = SizeProvider();
   final colorRandom = ColorRandom();
 
   @override
   Widget build(BuildContext context) {
-    final counterClick = Provider.of<ColorProvider>(context, listen: false);
+    final counterClick = Provider.of<SizeProvider>(context, listen: false);
     final random = Provider.of<ColorRandom>(context, listen: false);
     return SafeArea(
       child: Scaffold(
@@ -63,7 +63,8 @@ class MyHomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     MainWidget(
-                        currentColor: currentColor, counterClick: counterClick),
+                        currentColor: currentColor,
+                        sizeClick: counterClick),
                     RaisedButton(
                       child: Text('Clicker',
                           style: TextStyle(
